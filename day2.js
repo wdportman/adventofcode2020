@@ -13,15 +13,20 @@ fs.readFile('day2data.txt', 'utf8', (err, data) => {
     const character = splitRow[1][0];
     const password = splitRow[2];
 
-    // Add +1 to counter if the password "passes":
+    // Check how many times the character appears in the password:
     let characterCounter = 0;
     for (const char of password) {
       if (char === character) {
         characterCounter += 1;
       }
     }
-    console.log(characterCounter);
+
+    // Check whether the character counter is between max & min:
+    if ((characterCounter >= min) && (characterCounter <= max)) {
+      validPasswordCounter += 1;
+    }
   }
+  console.log(validPasswordCounter);
 })
 
 // 15-19 p: pppbpcppxcptppvmpppb
