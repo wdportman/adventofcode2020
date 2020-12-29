@@ -11,20 +11,20 @@ fs.readFile('day3data.txt', 'utf8', (err, data) => {
     if (dataArray[i][position] === '#') {
       treeCounter += 1;
     }
-    if (position <= (dataArray[i].length - 3)) {
+    if (position < 28) {
       position += 3;
     } else {
-      //29...
-      if (dataArray[i].length - position === 2) {
+      if (position === 28) {
         position = 0;
       }
-      //30...
-      if (dataArray[i].length - position === 1) {
+      if (position === 29) {
         position = 1;
       }
-      //31...
-      if (dataArray[i].length - position === 0) {
+      if (position === 30) {
         position = 2;
+      }
+      if (position === 31) {
+        position = 3;
       }
     }
   }
