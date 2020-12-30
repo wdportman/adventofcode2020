@@ -11,7 +11,8 @@ const getValue = function(row, keyString) {
 fs.readFile('day4data.txt', 'utf8', (err, data) => {
 
   const dataArray = data.split('\n\n');
-  const hasAllDataArray = [];
+  const completeDataArray = [];
+  const formattedDataArray = [];
 
   let validCounter = 0;
 
@@ -24,69 +25,35 @@ fs.readFile('day4data.txt', 'utf8', (err, data) => {
       }
     }
     if (includesCounter === terms.length) {
-      hasAllDataArray.push(row);
+      completeDataArray.push(row);
     }
-  }
+  };
 
-  // Check that the data that is present is also valid:
-  for (const row of hasAllDataArray) {
-    let validDataCounter = 0;
-    
-    // byr
-    byr = getValue(row, 'byr');
-    console.log(byr);
-    if (byr >= 1920 && byr <= 2002) {
-      validDataCounter += 1;
-    };
-
-    // iyr
-    iyr = getValue(row, 'iyr');
-    if (iyr >= 2010 && iyr <= 2020) {
-      validDataCounter += 1;
-    };
-
-    // eyr
-    eyr = getValue(row, 'eyr');
-    if (eyr >= 2020 && eyr <= 2030) {
-      validDataCounter += 1;
-    };
-
-    // hcl
-    hcl = getValue(row, 'hcl');
-    const hclValidChars = '#abcdef0123456789';
-    let invalidHcl = 0;
-    for (const character of hcl) {
-      if (!hclValidChars.includes(character)) {
-        invalidHcl += 1;
+  // Format each passport as an object in an array:
+  for (const row of completeDataArray) {
+    const newRow = row.split(/\r?\n| /).reduce((obj, str) => {
+      let strParts = str.split(":");
+      if (strParts[0] && strParts[1]) {
+        obj[strParts[0]] = strParts[1];
       }
-    }
-    if (hcl[0] !== '#') {
-      invalidHcl += 1;
-    };
-    if (invalidHcl === 0) {
-      validDataCounter += 1;
-    };
+      return obj;
+    }, {});    
+    formattedDataArray.push(newRow);
+  };
 
-    // ecl
-    ecl = getValue(row, 'ecl', 3);
-    const eyeColors = ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'];
-    if (eyeColors.includes(ecl)) {
-      validDataCounter += 1;
-    };
+  // Check that the data present in each passport is also valid:
+  for (const row of formattedDataArray) {
 
-    // pid
-    pid = getValue(row, 'pid', 9);
-    const pidValidChars = '0123456789';
-
-    // hgt
-
-
-    // total valid:
-    if (validDataCounter === 5) {
-      validCounter += 1;
-    }
-    //
   }
-
-  console.log("validCounter:", validCounter)
+  console.log("formattedDataArray:", formattedDataArray)
 });
+
+// let foo = data.split("\n").reduce(function(obj, str, index) {
+//   let strParts = str.split(":");
+//   if (strParts[0] && strParts[1]) { //<-- Make sure the key & value are not undefined
+//     obj[strParts[0].replace(/\s+/g, '')] = strParts[1].trim(); //<-- Get rid of extra spaces at beginning of value strings
+//   }
+//   return obj;
+// }, {});
+
+// console.log(foo);
