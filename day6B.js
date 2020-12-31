@@ -1,5 +1,4 @@
 const fs = require('fs');
-const { runInNewContext } = require('vm');
 
 fs.readFile('day6data.txt', 'utf8', (err, data) => {
 
@@ -9,7 +8,6 @@ fs.readFile('day6data.txt', 'utf8', (err, data) => {
   for (const row of dataArray) {
     const newRow = row.split('\n');
     formattedArray.push(newRow);
-    console.log(formattedArray);
   }
 
   // Get the # of questions *everyone* answered yes to per group:

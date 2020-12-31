@@ -1,5 +1,4 @@
 const fs = require('fs');
-const { runInNewContext } = require('vm');
 
 fs.readFile('day6data.txt', 'utf8', (err, data) => {
 
